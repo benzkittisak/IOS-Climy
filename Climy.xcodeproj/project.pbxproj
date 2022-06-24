@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E31BFEB828657B1C00E46119 /* dark_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E31BFEB628657B1C00E46119 /* dark_background.pdf */; };
-		E31BFEB928657B1C00E46119 /* light_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E31BFEB728657B1C00E46119 /* light_background.pdf */; };
 		E350E808286577F6009E9CC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E350E807286577F6009E9CC2 /* AppDelegate.swift */; };
 		E350E80A286577F6009E9CC2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E350E809286577F6009E9CC2 /* SceneDelegate.swift */; };
 		E350E80C286577F6009E9CC2 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E350E80B286577F6009E9CC2 /* WeatherViewController.swift */; };
@@ -18,8 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E31BFEB628657B1C00E46119 /* dark_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = dark_background.pdf; sourceTree = "<group>"; };
-		E31BFEB728657B1C00E46119 /* light_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = light_background.pdf; sourceTree = "<group>"; };
 		E350E804286577F6009E9CC2 /* Climy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Climy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E350E807286577F6009E9CC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E350E809286577F6009E9CC2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,8 +64,6 @@
 				E350E810286577F8009E9CC2 /* Assets.xcassets */,
 				E350E812286577F8009E9CC2 /* LaunchScreen.storyboard */,
 				E350E815286577F8009E9CC2 /* Info.plist */,
-				E31BFEB628657B1C00E46119 /* dark_background.pdf */,
-				E31BFEB728657B1C00E46119 /* light_background.pdf */,
 			);
 			path = Climy;
 			sourceTree = "<group>";
@@ -155,8 +149,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E31BFEB928657B1C00E46119 /* light_background.pdf in Resources */,
-				E31BFEB828657B1C00E46119 /* dark_background.pdf in Resources */,
 				E350E814286577F8009E9CC2 /* LaunchScreen.storyboard in Resources */,
 				E350E811286577F8009E9CC2 /* Assets.xcassets in Resources */,
 				E350E80F286577F6009E9CC2 /* Main.storyboard in Resources */,
