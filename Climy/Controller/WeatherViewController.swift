@@ -18,6 +18,8 @@ class WeatherViewController: UIViewController , UITextFieldDelegate{
     
     @IBOutlet weak var searchTF: UITextField!
     
+    var weatherManager = WeatherManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -31,10 +33,7 @@ class WeatherViewController: UIViewController , UITextFieldDelegate{
         print(searchTF.text!)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    
+
 //    ฟังก์ชันนี้เอาไว้จัดการเวลาที่ผู้ใช้กดตุ่ม Return มาเหมือนตุ่ม enter แหละ
 //    แล้วพอเค้ากดมาจะให้ทำไรฟร้ะ อะไรแบบนั้น
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -42,10 +41,32 @@ class WeatherViewController: UIViewController , UITextFieldDelegate{
         print(searchTF.text!)
         return true
     }
+
+//    อันต่อไปคือเมื่อผู้ใช้กดไปที่ textfield หรือกดอะไรที่ไม่ได้อยู่ใน textfield จะให้มันทำอะไรต่อ
+//    อารมณ์แบบว่าขอโทษนะ controller ผู้ใช้เค้ากดไปนอกคีย์บอร์ดแล้วจะให้ปิดคีย์บอร์ดเลยไหม มันจะต่างจาก method อัน
+//    textFieldDidEndEditing อันนั้นจะทำงานหลังจากที่คีย์บอร์ดมันหายไปแล้วหรือจบการพิมพ์แล้ว แต่อันนี้คือมันจะทำงานระหว่าง
+//    ที่คีย์บอร์ดกำลังเปิดอยู่ แล้วกำลังลังเลว่าเอ๊ะ ชั้นจะปิดตัวเองดีไหมนะ หรือยังดี
+//    เราใช้มันเอาไว้เช็คค่าได้ด้วยว่าถ้าผู้ใช้ยังไม่พิมพ์อะไรมาใน textview เลยแต่เราไปกดข้างนอกคีย์บอร์ดแล้ว แล้วจะให้ปิดคีย์บอร์ด
+//    ไหม หรือว่าจะไม่ปิดจนกว่าผู้ใช้จะพิมพ์มา ยาวจังฟร้ะ
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if searchTF.text != nil {
+//            return true แปลว่าปิดคีย์บอร์ดได้เลยคา
+            return true
+        } else {
+            searchTF.placeholder = "Type Someting"
+//            return false แปลว่ายังไม่ปิดคา
+            return false
+        }
+    }
+    
+    
     
 //    อันต่อไปคือเวลาที่เรากดตุ่มค้นหาแล้ว ข้อความที่อยู่ใน textfield มันควรจะหายไปเพื่อให้เราพิมพ์ชื่อเมืองอันใหม่เข้าไปใช่ป่ะ
 //    เราจะใช้ไอ้เจ้า method ตัวข้างล่างมาจัดการ มันจะอารมณ์ว่า controller โว๊ยยคนใช้เค้าหยุดพิมพ์แล้วจะให้ทำไรต่อฟร้ะ
     func textFieldDidEndEditing(_ textField: UITextField) {
+        if let city = searchTF.text {
+            weatherManager.fetchWeather(cityName: city)
+        }
         searchTF.text = ""
     }
     
