@@ -75,7 +75,16 @@ class WeatherViewController: UIViewController , UITextFieldDelegate , WeatherMan
 //    ฟังก์ชันที่รับค่ามาจาก Weather Manager แล้วก็จะเอามาอัปเดตข้อมูลใน UI
 //    มาจาก protocol แหละ
     func didUpdateWeather(_ weatherManager : WeatherManager , weather:WeatherModel) {
-        print(weather.temperatureString)
+        
+//        ตอนนี้มันจะมีปัญหาเรื่องของ Thead เพราะว่าตัวการทำงานของเราพวก API มันทำงานอยู่เบื้องหลัง มันต้องใช้เวลา
+//        ฉะนั้นเวลาที่เราพยายามจะอัปเดต UI มันจะ Error วิธีแก้ก็ให้ใช้ DispatchQueue
+//        temperatureLB.text = weather.temperatureString
+//        แบบนิ้
+        DispatchQueue.main.async {
+            self.temperatureLB.text = weather.temperatureString
+            self.conditionalIV.image = UIImage(systemName: weather.conditionName)
+            self.cityLB.text = weather.cityName
+        }
     }
     
     func didFailureWithError(with error: Error) {
