@@ -9,7 +9,7 @@ import UIKit
 
 // UITextFieldDelegate มันเป็น class ที่ช่วยให้เราจัดการกับการแก้ไขการตรวจสอบข้อความต่าง ๆ บน textfield น่ะนะ
 
-class WeatherViewController: UIViewController , UITextFieldDelegate{
+class WeatherViewController: UIViewController , UITextFieldDelegate , WeatherManagerDelegate{
 
     @IBOutlet weak var conditionalIV: UIImageView!
     
@@ -26,6 +26,7 @@ class WeatherViewController: UIViewController , UITextFieldDelegate{
 //        delegate เป็นตัวจัดการกับการตอบสนองของข้อความต่าง ๆ รวมไปถึงคำสั่งพิเศษที่เกิดขึ้นใน textfield เช่นว่า
 //        เห้ยผู้ใช้กดตุ่ม GO มาจะให้ทำไรอะ หรือเห้ยผู้ใช้ไปกดอะไรนอก textfield แล้วจะให้ปิดคีย์บอร์ดไหมฟร้ะ
         searchTF.delegate = self
+        weatherManager.delegate = self
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
@@ -70,5 +71,15 @@ class WeatherViewController: UIViewController , UITextFieldDelegate{
         searchTF.text = ""
     }
     
+    
+//    ฟังก์ชันที่รับค่ามาจาก Weather Manager แล้วก็จะเอามาอัปเดตข้อมูลใน UI
+//    มาจาก protocol แหละ
+    func didUpdateWeather(_ weatherManager : WeatherManager , weather:WeatherModel) {
+        print(weather.temperatureString)
+    }
+    
+    func didFailureWithError(with error: Error) {
+        print(error.localizedDescription)
+    }
 }
 
