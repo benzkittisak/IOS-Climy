@@ -6,6 +6,8 @@
 //
 
 import UIKit
+// Library จัดการกับ GPS
+import CoreLocation
 
 // UITextFieldDelegate มันเป็น class ที่ช่วยให้เราจัดการกับการแก้ไขการตรวจสอบข้อความต่าง ๆ บน textfield น่ะนะ
 
@@ -20,6 +22,9 @@ class WeatherViewController: UIViewController {
     
     var weatherManager = WeatherManager()
     
+    //    เรียกใช้งาน CoreLocation
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -27,6 +32,14 @@ class WeatherViewController: UIViewController {
         //        เห้ยผู้ใช้กดตุ่ม GO มาจะให้ทำไรอะ หรือเห้ยผู้ใช้ไปกดอะไรนอก textfield แล้วจะให้ปิดคีย์บอร์ดไหมฟร้ะ
         searchTF.delegate = self
         weatherManager.delegate = self
+        
+        locationManager.delegate = self
+        //        ก่อนที่เราจะเรียกใช้งาน GPS เราก็ต้องทำการขอสิทธิ์กันก่อน
+        //        หลังจากเรียกงานตัวนี้ มันจะโชว์ popup ที่ถามเราว่าจะให้สิทธิ์เข้าถึง GPS ไหมนั่นแหละ
+        locationManager.requestWhenInUseAuthorization()
+        //         จากนั้นเราถึงจะเรียกใช้ให้ GPS มันทำงานขอตำแหน่งปัจจุบันของโทรศัพท์
+        locationManager.requestLocation()
+
     }
     
 }
@@ -107,5 +120,28 @@ extension WeatherViewController:WeatherManagerDelegate {
     func didFailureWithError(with error: Error) {
         print(error.localizedDescription)
     }
-//    ทีนี้ class หลักของเราก็จะมีโค้ดจึ๋งนึง
+    //    ทีนี้ class หลักของเราก็จะมีโค้ดจึ๋งนึง
+}
+
+//MARK: - CLLocationManagerDelegate Section
+
+extension WeatherViewController:CLLocationManagerDelegate {
+        
+//    ตัวนี้เอาไว้ใช้เวลาที่ GPS มีการอัปเดต
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        คือ locations มันเป็น array อะนะ ดังนั้นเราก็จะเอาข้อมูลของ array ตัวสุดท้ายมาเพราะมันเป็นข้อมูลล่าสุด
+//        และด้วยความที่ .last มันเป็น optional ก็ต้องมาแกะห่อมันก่อน
+        if let location = locations.last {
+            let lat = location.coordinate.latitude
+            let lng = location.coordinate.longitude
+            
+            weatherManager.fetchWeather(latitude:lat , longitude:lng)
+            
+        }
+    }
+    
+//    ซึ่ง function บนมันต้องมาคู่กับเจ้านี่ เมื่อมันรับไม่ได้หรือมัน Error จะทำยังไงกับมัน
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
 }
